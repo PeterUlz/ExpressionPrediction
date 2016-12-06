@@ -1,0 +1,13 @@
+args <- commandArgs()
+
+bottom<-read.csv(args[4],header=TRUE,sep="\t")
+top<-read.csv(args[5],header=TRUE,sep="\t")
+png(filename = args[6], width = 600, height = 600, units = "px", pointsize = 15, bg = "white", res = NA)
+plot(bottom$Position,bottom$Mean.Cov,type="l",xlab="Position relative to TSS",ylab="Read depth",col="green",ylim=c(0,1),bty="n")
+polygon(c(bottom$Position,rev(bottom$Position)),c(bottom$LowerBound,rev(bottom$UpperBound)),col=rgb(44,123,182,51,maxColorValue=255), border = FALSE)
+lines(bottom$Position,bottom$Mean.Cov,col=rgb(44,123,182,maxColorValue=255),lwd=3)
+polygon(c(top$Position,rev(top$Position)),c(top$LowerBound,rev(top$UpperBound)),col=rgb(215,25,28,51,maxColorValue=255), border = FALSE)
+lines(top$Position,top$Mean.Cov,col=rgb(215,25,28,maxColorValue=255),lwd=3)
+abline(v=-150,lwd=3)
+abline(v=50,lwd=3)
+dev.off()
